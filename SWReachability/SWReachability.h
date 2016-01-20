@@ -31,26 +31,54 @@
 extern NSString *kSWReachabilityChangedNotification;
 
 
-typedef NS_ENUM(NSInteger, SWNetworingReachabilityStatus) {
-    SWNetworkReachabilityStatusNotReachable = 0,
-    SWNetworkReachabilityStatusReachableViaWWAN = 1,
-    SWNetworkReachabilityStatusReachableViaWiFi = 2,
+typedef NS_ENUM (NSInteger, SWNetworkingReachabilityStatus) {
+    SWNetworkingReachabilityStatusNotReachable = 0,
+    SWNetworkingReachabilityStatusReachableViaWWAN = 1,
+    SWNetworkingReachabilityStatusReachableViaWiFi = 2,
 };
 
 @interface SWReachability : NSObject
 
-@property (readonly, nonatomic, assign) SWNetworingReachabilityStatus networkReachabilityStatus;
+/**
+ *  Returns the current reachability status.
+ @see SWNetworkingReachabilityStatus
+ */
+@property (readonly, nonatomic) SWNetworkingReachabilityStatus networkReachabilityStatus;
 
-+(SWNetworingReachabilityStatus)getCurrentNetworkStatus;
+/**
+ *  Calling this current status will return - Class methods
+ *
+ *  @return Currnt Status
+ */
++ (SWNetworkingReachabilityStatus)getCurrentNetworkStatus;
 
-+(BOOL)connected;
+/**
+ *  Check simply network availabily - Class methods
+ *
+ *  @return If network available will return YES, else NO
+ */
++ (BOOL)connected;
 
-+(void)checkCurrentStatus:(void (^)(SWNetworingReachabilityStatus currentStatus)) currentStatus statusChange:(void (^)(SWNetworingReachabilityStatus changedStatus))changedStatus;
+/**
+ *  This will work like notification. When Change states this will automatically comes to the block - Class methods
+ *
+ *  @param currentStatus current network status
+ *  @param changedStatus changed network status
+ */
++ (void)checkCurrentStatus:(void (^)(SWNetworkingReachabilityStatus currentStatus))currentStatus statusChange:(void (^)(SWNetworkingReachabilityStatus changedStatus))changedStatus;
 
--(BOOL)connected;
 
--(SWNetworingReachabilityStatus)getCurrentNetworkStatus;
+/**
+ *  Check simply network availabily - Instance methods
+ *
+ *  @return If network available will return YES, else NO
+ */
+- (BOOL)connected;
 
--(void)startNotifying;
+
+/**
+ *  calling this method will start notification will start .
+ */
+- (void)startNotifying;
 
 @end
